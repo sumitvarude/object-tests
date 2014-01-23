@@ -1,5 +1,4 @@
 <project name="object-test" default="runtest">
-
     <target name="clean">
         <delete dir="build"/>
     </target>
@@ -33,5 +32,4 @@
             </batchtest>
         </junit>
     </target>
-
 </project>
