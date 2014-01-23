@@ -1,0 +1,37 @@
+<project name="object-test" default="runtest">
+
+    <target name="clean">
+        <delete dir="build"/>
+    </target>
+
+    <target name="create-dir" depends="clean">
+        <mkdir dir="build/src"/>
+        <mkdir dir="build/test"/>
+    </target>
+
+    <target name="compile" depends="create-dir">
+        <javac srcdir="src" destdir="build/src" includeantruntime="false" debug="yes"/>
+    </target>
+
+    <target name="compileTest" depends="compile" >
+        <javac srcdir="Test" destdir="build/test" classpath="build/src;dependencies/junit-4.10.jar"
+               includeantruntime="false" debug="yes"/>
+    </target>
+
+    <target name="runtest" depends="compileTest">
+        <junit fork="yes" printsummary="on"  haltonfailure="yes" failureProperty="test.failed" dir="." >
+            <classpath>
+                <pathelement location="build/src" />
+                <pathelement location="build/test" />
+                <pathelement location="dependencies/junit-4.10.jar"/>
+            </classpath>
+            <batchtest >
+                <fileset dir="Test">
+                    <include name="**/*Test.java" />
+                    <exclude name="**/*$*.class"/>
+                </fileset>
+            </batchtest>
+        </junit>
+    </target>
+
+</project>
